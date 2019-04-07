@@ -5,32 +5,49 @@
 import time
 import socket
 
-HOST = '192.168.1.10'  # Endereco IP do Servidor
+HOST = '192.168.10.106'  # Endereco IP do Servidor
 PORT = 5000            # Porta que o Servidor esta
+FILE_NAME = '1mb'
 
-def client_tcp():
+def client_tcp(op):
     tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     dest = (HOST, PORT)
     tcp.connect(dest)
-    print("Para sair use CTRL+X\n")
-    msg = raw_input()
-    while msg != '\x18':
-        tcp.send (msg)
-        msg = raw_input()
+    #Enviando modo de operacao ao servidor
+    tcp.send (op)
+
+    if op=='1':
+        #Enviar arquivo
+        arq = open(FILE_NAME+".txt",'r')
+        tcp.send (arq)
+        arq.close()
+    else:
+        #Receber arquivo
+        arq = open(FILE_NAME+"_new.txt",'w')
+        while True:
+            msg = con.recv(1024)
+            if not msg: break
+            else: arq.write(msg)
+        arq.close()
     tcp.close()
 
-for i in range(1,4):
-    #Iniciando contador
-    start = time.time()
+def main():
+    for i in range(1,4):
+        #Iniciando contador
+        start = time.time()
 
-    #Execução
-    client_tcp()
+        op=input("Selecione um modo de operacao:")
+        #Execucao
+        client_tcp(op)
 
-    #Parando contador
-    stop = time.time()
+        #Parando contador
+        stop = time.time()
 
-    #Exibindo resultado
-    print("Execução TCP " + str(i) + ":")
-    print(stop-start)
+        #Exibindo resultado
+        print("Execucao TCP " + str(i) + ":")
+        print(stop-start)
 
-pass
+    pass
+
+if __name__ == '__main__':
+    main()
