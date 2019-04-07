@@ -1,4 +1,4 @@
-# Cliente TCP
+# Servidor TCP
 # Dev. por Anderson Garrote
 # RA 743505
 
