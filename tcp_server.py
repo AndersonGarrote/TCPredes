@@ -18,14 +18,14 @@ orig = (HOST, PORT)
 tcp.bind(orig)
 tcp.listen(1)
 
-print "Servidor ouvindo na porta: ", PORT
+print(f"Servidor ouvindo na porta: {PORT}")
 
 while True:
     con, cliente = tcp.accept()
     pid = os.fork()
     if pid == 0:
         tcp.close()
-        print 'Conectado por', cliente
+        print('Conectado por', cliente)
         #Recebendo modo de operacao do cliente
         op = con.recv(1024)
         if op=='1':
@@ -43,7 +43,7 @@ while True:
             tcp.send (arq)
             arq.close()
 
-        print 'Finalizando conexao do cliente', cliente
+        print('Finalizando conexao do cliente', cliente)
         con.close()
         sys.exit(0)
     else:

@@ -1,34 +1,47 @@
 # Cliente TCP
 # Dev. por Anderson Garrote
+# Adaptado de https://wiki.python.org.br/SocketBasico
+#   e https://gist.github.com/giefko/2fa22e01ff98e72a5be2
 # RA 743505
 
 import time
 import socket
 
-HOST = '192.168.10.106'  # Endereco IP do Servidor
-PORT = 5000            # Porta que o Servidor esta
+HOST = '200.9.84.114'#'200.9.84.163'  # Endereco IP do Servidor
+PORT = 50001            # Porta que o Servidor esta
 FILE_NAME = '1mb'
 
-def client_tcp(op):
+def client_tcp():
     tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     dest = (HOST, PORT)
     tcp.connect(dest)
-    #Enviando modo de operacao ao servidor
-    tcp.send (op)
 
-    if op=='1':
+    op=input("Selecione um modo de operacao:")
+    #Enviando modo de operacao ao servidor
+    tcp.send(str(op))
+    if op==1:
         #Enviar arquivo
-        arq = open(FILE_NAME+".txt",'r')
-        tcp.send (arq)
+        arq = open(FILE_NAME+".txt",'r+')
+        print("Enviando arquivo...")
+        buffer = arq.read(1024)
+        while buffer:
+            tcp.send(buffer)
+            buffer = arq.read(1024)
+            pass
         arq.close()
-    else:
+        print("Arquivo enviado!")
+    elif op==2:
         #Receber arquivo
-        arq = open(FILE_NAME+"_new.txt",'w')
+        arq = open(FILE_NAME+"_new.txt",'w+')
+        print("Recebendo arquivo...")
         while True:
-            msg = con.recv(1024)
-            if not msg: break
-            else: arq.write(msg)
+            buffer = tcp.recv(1024)
+            print(not buffer)
+            if not buffer: break
+            print('recebendo...')
+            arq.write(buffer)
         arq.close()
+        print("Arquivo recebido!")
     tcp.close()
 
 def main():
@@ -36,9 +49,8 @@ def main():
         #Iniciando contador
         start = time.time()
 
-        op=input("Selecione um modo de operacao:")
         #Execucao
-        client_tcp(op)
+        client_tcp()
 
         #Parando contador
         stop = time.time()
