@@ -27,7 +27,7 @@ def conectado(con, cliente):
                 con.send(buffer)
                 buffer = arq.read(1024)
                 pass
-            con.send(buffer)
+            con.send("")
             arq.close()
             print("Arquivo enviado!")
         elif op=="1":
@@ -50,7 +50,7 @@ tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 orig = (HOST, PORT)
 
 tcp.bind(orig)
-tcp.listen(1)
+tcp.listen(5)
 
 while True:
     con, cliente = tcp.accept()

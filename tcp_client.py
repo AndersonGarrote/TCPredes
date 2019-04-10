@@ -7,7 +7,7 @@
 import time
 import socket
 
-HOST = '200.9.84.114'#'200.9.84.163'  # Endereco IP do Servidor
+HOST = '200.9.84.163'  # Endereco IP do Servidor
 PORT = 50001            # Porta que o Servidor esta
 FILE_NAME = '1mb'
 
