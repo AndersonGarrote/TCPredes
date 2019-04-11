@@ -1,0 +1,71 @@
+C:\Users\uehar\Desktop\TCPredes-master>python tcp_client.py
+Selecione um modo de operacao:1
+Enviando arquivo...
+Arquivo enviado!
+Execucao TCP 1:
+6.30300021172
+Selecione um modo de operacao:1
+Enviando arquivo...
+Arquivo enviado!
+Execucao TCP 2:
+5.00800013542
+Selecione um modo de operacao:1
+Enviando arquivo...
+Arquivo enviado!
+Execucao TCP 3:
+5.46599984169
+
+--------------------------------------------------------------
+
+PS C:\Users\uehar\Desktop\TCPredes-master> python tcp_client.py
+Selecione um modo de operacao:2
+Recebendo arquivo...
+Arquivo recebido!
+Execucao TCP 1:
+21.1900000572
+Selecione um modo de operacao:2
+Recebendo arquivo...
+Arquivo recebido!
+Execucao TCP 2:
+24.121999979
+Selecione um modo de operacao:2
+Recebendo arquivo...
+Arquivo recebido!
+Execucao TCP 3:
+19.3789999485
+
+==================================================================
+
+Selecione um modo de operacao:1
+Enviando arquivo...
+Arquivo enviado!
+Execucao TCP 1:
+20.9949998856
+Selecione um modo de operacao:1
+Enviando arquivo...
+Arquivo enviado!
+Execucao TCP 2:
+23.8420000076
+Selecione um modo de operacao:1
+Enviando arquivo...
+Arquivo enviado!
+Execucao TCP 3:
+22.9259998798
+
+-----------------------------------------------------------------
+
+Selecione um modo de operacao:2
+Recebendo arquivo...
+Arquivo recebido!
+Execucao TCP 1:
+104.134000063
+Selecione um modo de operacao:2
+Recebendo arquivo...
+Arquivo recebido!
+Execucao TCP 2:
+110.463999987
+Selecione um modo de operacao:2
+Recebendo arquivo...
+Arquivo recebido!
+Execucao TCP 3:
+113.612999916

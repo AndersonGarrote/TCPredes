@@ -16,7 +16,7 @@ def conectado(con):
 
     while True:
         #Recebendo modo de operacao cliente
-        op, cliente = con.recvfrom(1024)
+        op, cliente= con.recvfrom(1024)
 
         if op=="2":
             #Enviar arquivo
@@ -24,29 +24,25 @@ def conectado(con):
             print("Enviando arquivo...")
             buffer = arq.read(1024)
             while buffer:
-                con.sendto(buffer,dest)
-                buffer = con.read(1024)
+                con.sendto(buffer,cliente)
+                buffer = arq.read(1024)
                 pass
-            con.send(buffer)
+            con.sendto(buffer,cliente)
             arq.close()
             print("Arquivo enviado!")
-            print('Finalizando conexao com o cliente', cliente)
-            con.close()
 
         elif op=="1":
             #Receber arquivo
             arq = open(FILE_NAME,'w+')
             print("Recebendo arquivo...")
-            try:
-                while True:
-                    con.settimeout(2)
-                    buffer, cliente = con.recvfrom(1024)
-                    arq.write(buffer)
-            except timeout:
-                arq.close()
-                print("Arquivo recebido!")
-                print('Finalizando conexao com o cliente', cliente)
-                con.close()
+            while True:
+                buffer, cliente = con.recvfrom(1024)
+                if not buffer: break
+                else: arq.write(buffer)
+            arq.close()
+            print("Arquivo recebido!")
+        else:
+            break
 
 def main():
     udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -55,7 +51,11 @@ def main():
 
     udp.bind(orig)
 
+    print("Servidor Ligado!")
+
     conectado(udp)
+
+    udp.close()
 
 if __name__ == '__main__':
     main()

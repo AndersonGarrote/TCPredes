@@ -16,8 +16,8 @@ def conectado(con, cliente):
 
     while True:
         #Recebendo modo de operacao cliente
-        op=con.recv(2)
-
+        op=con.recv(1024)
+        con.send("OK")
         if op=="2":
             #Enviar arquivo
             arq = open(FILE_NAME,'r+')
@@ -30,7 +30,7 @@ def conectado(con, cliente):
             con.send(buffer)
             arq.close()
             print("Arquivo enviado!")
-            print('Finalizando conexao com o cliente', cliente)
+            print("Finalizando conexao com o cliente", cliente)
             con.close()
             thread.exit()
         elif op=="1":
@@ -43,7 +43,11 @@ def conectado(con, cliente):
                 else: arq.write(buffer)
             arq.close()
             print("Arquivo recebido!")
-            print('Finalizando conexao com o cliente', cliente)
+            print("Finalizando conexao com o cliente", cliente)
+            con.close()
+            thread.exit()
+        else:
+            print("Finalizando conexao com o cliente", cliente)
             con.close()
             thread.exit()
 

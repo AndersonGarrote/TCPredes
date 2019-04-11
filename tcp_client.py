@@ -6,26 +6,27 @@
 
 import time
 import socket
+import os
 
 HOST = 'localhost'#'200.9.84.163'  # Endereco IP do Servidor
 PORT = 5000                        # Porta que o Servidor esta
 FILE_NAME = '1mb'
 
-def client_tcp():
+def client_tcp(op):
     tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     dest = (HOST, PORT)
     tcp.connect(dest)
-
-    op=input("Selecione um modo de operacao:")
     #Enviando modo de operacao ao servidor
-    tcp.send(str(op))
+    tcp.sendall(str(op))
+    print(tcp.recv(1024))
     if op==1:
         #Enviar arquivo
         arq = open(FILE_NAME+".txt",'r+')
+
         print("Enviando arquivo...")
         buffer = arq.read(1024)
         while buffer:
-            tcp.send(buffer)
+            tcp.sendall(buffer)
             buffer = arq.read(1024)
             pass
         arq.close()
@@ -40,15 +41,18 @@ def client_tcp():
             arq.write(buffer)
             arq.close()
         print("Arquivo recebido!")
+
     tcp.close()
 
 def main():
     for i in range(1,4):
+
+        op=input("Selecione um modo de operacao:")
         #Iniciando contador
         start = time.time()
 
         #Execucao
-        client_tcp()
+        client_tcp(op)
 
         #Parando contador
         stop = time.time()
