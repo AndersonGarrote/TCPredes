@@ -1,4 +1,4 @@
-# Cliente TCP
+# Cliente UDP
 # Dev. por Anderson Garrote
 # Adaptado de https://wiki.python.org.br/SocketBasico
 #   e https://gist.github.com/giefko/2fa22e01ff98e72a5be2
@@ -7,48 +7,47 @@
 import time
 import socket
 
-HOST = 'localhost'#'200.9.84.163'  # Endereco IP do Servidor
+HOST = '169.254.13.56'#'200.9.84.163'  # Endereco IP do Servidor
 PORT = 5000                        # Porta que o Servidor esta
 FILE_NAME = '1mb'
 
-def client_tcp():
-    tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+def client_udp():
+    udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     dest = (HOST, PORT)
-    tcp.connect(dest)
 
     op=input("Selecione um modo de operacao:")
     #Enviando modo de operacao ao servidor
-    tcp.send(str(op))
+    udp.sendto(str(op),dest)
     if op==1:
         #Enviar arquivo
         arq = open(FILE_NAME+".txt",'r+')
         print("Enviando arquivo...")
         buffer = arq.read(1024)
         while buffer:
-            tcp.send(buffer)
+            udp.sendto(buffer,dest)
             buffer = arq.read(1024)
             pass
         arq.close()
         print("Arquivo enviado!")
+        udp.close()
     elif op==2:
         print("Recebendo arquivo...")
+        #Receber arquivo
+        arq = open(FILE_NAME+"_new.txt",'wb+')
         while True:
-            #Receber arquivo
-            arq = open(FILE_NAME+"_new.txt",'wb+')
-            buffer = tcp.recv(1024)
+            buffer = udp.recvfrom(1024)
             if not buffer: break
             arq.write(buffer)
-            arq.close()
+        arq.close()
         print("Arquivo recebido!")
-    tcp.close()
-
+        udp.close()
 def main():
     for i in range(1,4):
         #Iniciando contador
         start = time.time()
 
         #Execucao
-        client_tcp()
+        client_udp()
 
         #Parando contador
         stop = time.time()
