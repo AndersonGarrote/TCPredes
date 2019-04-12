@@ -17,7 +17,7 @@ def conectado(con, cliente):
     while True:
         #Recebendo modo de operacao cliente
         op=con.recv(1024)
-        con.send("OK")
+
         if op=="2":
             #Enviar arquivo
             arq = open(FILE_NAME,'r+')
@@ -34,6 +34,7 @@ def conectado(con, cliente):
             con.close()
             thread.exit()
         elif op=="1":
+            con.send("OK")
             #Receber arquivo
             arq = open(FILE_NAME,'w+')
             print("Recebendo arquivo...")

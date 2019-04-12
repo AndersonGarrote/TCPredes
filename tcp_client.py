@@ -8,7 +8,7 @@ import time
 import socket
 import os
 
-HOST = 'localhost'#'200.9.84.163'  # Endereco IP do Servidor
+HOST = '192.168.10.106'#'200.9.84.163'  # Endereco IP do Servidor
 PORT = 5000                        # Porta que o Servidor esta
 FILE_NAME = '1mb'
 
@@ -18,8 +18,9 @@ def client_tcp(op):
     tcp.connect(dest)
     #Enviando modo de operacao ao servidor
     tcp.sendall(str(op))
-    print(tcp.recv(1024))
+
     if op==1:
+        print(tcp.recv(1024))
         #Enviar arquivo
         arq = open(FILE_NAME+".txt",'r+')
 
